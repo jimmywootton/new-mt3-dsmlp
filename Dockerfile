@@ -24,10 +24,12 @@ USER jovyan
 
 # RUN conda install -y scikit-learn
 
+WORKDIR /opt/conda
+
 RUN git lfs install && \
     git clone https://huggingface.co/spaces/mimbres/YourMT3
 
-WORKDIR /home/jovyan/YourMT3
+WORKDIR /opt/conda/YourMT3
 
 RUN pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir spaces
