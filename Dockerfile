@@ -32,7 +32,8 @@ RUN git lfs install && \
 WORKDIR /opt/conda/YourMT3
 
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir spaces
+    pip install --no-cache-dir spaces && \
+    chmod -R o+w .
 
 # Override command to disable running jupyter notebook at launch
 # CMD ["/bin/bash"]
