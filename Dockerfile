@@ -15,14 +15,10 @@ LABEL org.opencontainers.image.source="https://github.com/jimmywootton/new-mt3-d
 USER root
 
 RUN apt-get update -y && \
-    apt-get -y install git-lfs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get -y install git-lfs
 
 # 3) install packages using notebook user
 USER jovyan
-
-# RUN conda install -y scikit-learn
 
 WORKDIR /opt/conda
 
@@ -30,6 +26,8 @@ RUN git lfs install && \
     git clone https://huggingface.co/spaces/mimbres/YourMT3
 
 WORKDIR /opt/conda/YourMT3
+
+COPY app.py model_helper.py ./
 
 RUN pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir spaces && \
