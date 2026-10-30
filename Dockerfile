@@ -15,23 +15,25 @@ LABEL org.opencontainers.image.source="https://github.com/jimmywootton/new-mt3-d
 USER root
 
 RUN apt-get update -y && \
-    apt-get -y install git-lfs
+    apt-get -y install git-lfs && \
+    git lfs install --system
 
 # 3) install packages using notebook user
-USER jovyan
 
 WORKDIR /opt/conda
 
-RUN git lfs install && \
-    git clone https://huggingface.co/spaces/mimbres/YourMT3
+RUN git clone https://huggingface.co/spaces/mimbres/YourMT3
 
 WORKDIR /opt/conda/YourMT3
 
-COPY --chown=jovyan:jovyan app.py model_helper.py ./
+COPY app.py model_helper.py ./
+
+RUN chmod -R o+w ./
+
+USER jovyan
 
 RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir spaces && \
-    chmod -R o+w .
+    pip install --no-cache-dir spaces
 
 # Override command to disable running jupyter notebook at launch
 # CMD ["/bin/bash"]
