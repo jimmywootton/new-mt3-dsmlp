@@ -27,7 +27,7 @@ RUN git lfs install && \
 
 WORKDIR /opt/conda/YourMT3
 
-COPY app.py model_helper.py ./
+COPY --chown=jovyan:jovyan app.py model_helper.py ./
 
 RUN pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir spaces && \
